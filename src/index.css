@@ -8,35 +8,57 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Medieval Color Palette */
+    --background: 32 20% 8%;
+    --foreground: 45 15% 85%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 28 25% 12%;
+    --card-foreground: 45 15% 85%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 28 25% 12%;
+    --popover-foreground: 45 15% 85%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 45 85% 55%;
+    --primary-foreground: 28 25% 12%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 15 45% 25%;
+    --secondary-foreground: 45 15% 85%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 20 15% 20%;
+    --muted-foreground: 45 8% 60%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 5 70% 45%;
+    --accent-foreground: 45 15% 85%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 45 15% 85%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 25 25% 25%;
+    --input: 25 25% 18%;
+    --ring: 45 85% 55%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Medieval Design Tokens */
+    --parchment: 45 60% 92%;
+    --parchment-dark: 40 40% 85%;
+    --gold: 45 85% 55%;
+    --gold-dark: 42 80% 45%;
+    --bronze: 30 60% 40%;
+    --crimson: 5 70% 45%;
+    --forest: 120 30% 25%;
+    
+    /* Gradients */
+    --gradient-gold: linear-gradient(135deg, hsl(var(--gold)), hsl(var(--gold-dark)));
+    --gradient-parchment: linear-gradient(180deg, hsl(var(--parchment)), hsl(var(--parchment-dark)));
+    --gradient-royal: linear-gradient(135deg, hsl(var(--crimson)), hsl(var(--bronze)));
+    
+    /* Shadows */
+    --shadow-medieval: 0 8px 32px -8px hsl(var(--gold) / 0.3);
+    --shadow-deep: 0 16px 48px -16px hsl(0 0% 0% / 0.7);
+    
+    /* Animations */
+    --transition-medieval: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +123,71 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Cinzel', serif;
+  }
+}
+
+@layer utilities {
+  /* Medieval Component Classes */
+  .medieval-card {
+    @apply bg-card border-2 border-border rounded-lg shadow-lg;
+    background: var(--gradient-parchment);
+    border-color: hsl(var(--bronze));
+    box-shadow: var(--shadow-medieval);
+  }
+  
+  .medieval-button {
+    @apply relative px-8 py-4 font-bold text-lg rounded-lg transition-all duration-300;
+    background: var(--gradient-gold);
+    color: hsl(var(--primary-foreground));
+    border: 2px solid hsl(var(--gold-dark));
+    box-shadow: var(--shadow-medieval);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+  
+  .medieval-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px -12px hsl(var(--gold) / 0.5);
+  }
+  
+  .medieval-input {
+    @apply w-full px-4 py-3 rounded-lg border-2 bg-input text-foreground;
+    border-color: hsl(var(--bronze));
+    background: hsl(var(--input));
+    transition: var(--transition-medieval);
+  }
+  
+  .medieval-input:focus {
+    outline: none;
+    border-color: hsl(var(--gold));
+    box-shadow: 0 0 0 3px hsl(var(--gold) / 0.2);
+  }
+  
+  .ornamental-border {
+    @apply relative;
+  }
+  
+  .ornamental-border::before {
+    content: '';
+    @apply absolute inset-0 rounded-lg;
+    background: linear-gradient(45deg, hsl(var(--gold)), hsl(var(--bronze)), hsl(var(--crimson)));
+    padding: 2px;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+  }
+  
+  .parchment-bg {
+    background: var(--gradient-parchment);
+    position: relative;
+  }
+  
+  .parchment-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.1;
+    background-image: radial-gradient(circle at 25% 25%, hsl(var(--bronze)) 1px, transparent 1px),
+                      radial-gradient(circle at 75% 75%, hsl(var(--gold)) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
 }
